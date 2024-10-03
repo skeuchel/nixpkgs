@@ -30,6 +30,7 @@ let
   llvmNativeTarget =
     if stdenv.hostPlatform.isx86_64 then "X86"
     else if stdenv.hostPlatform.isAarch64 then "AArch64"
+    else if stdenv.hostPlatform.isRiscV64 then "RISCV"
     else throw "Currently unsupported LLVM platform '${stdenv.hostPlatform.config}'";
 
   inferNativeTarget = t: if t == "NATIVE" then llvmNativeTarget else t;
@@ -171,6 +172,6 @@ in stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/llvm/llvm-project";
     license = with licenses; [ ncsa ];
     maintainers = with maintainers; [ SomeoneSerge Madouura ];
-    platforms = with platforms; aarch64 ++ x86;
+    platforms = with platforms; aarch64 ++ x86 ++ riscv64;
   };
 })
